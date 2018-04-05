@@ -14,7 +14,10 @@ a {
 body {
     font-size: 12px;
     line-height: 1.5;
-    background: #F6F6F6;
+    background: #f6f6f6;
+}
+input {
+    line-height: 1.4;
 }
 /* layout */
 .page {
@@ -26,10 +29,9 @@ body {
 }
 .page > main {
     flex-grow: 1;
-    border: 1px solid green;
 }
 /* aside */
-.page>aside{
+.page > aside {
     display: flex;
     flex-direction: column;
 }
@@ -37,10 +39,9 @@ body {
     text-align: center;
     padding: 10px;
     border-bottom: 1px solid #999;
- 
 }
-.newSong.active{
-    background: #FFC7C7;
+.newSong.active {
+    background: #ffc7c7;
 }
 .songList {
     text-align: left;
@@ -50,14 +51,12 @@ body {
     border-bottom: 1px solid #ddd;
     padding: 10px 5px;
 }
-.songList>li.active{
-    background: #FFE2E2;
-}
-.uploadAera {
+.songList > li.active {
+    background: #ffe2e2;
 }
 
 .draggable {
-    padding: 20px ;
+    padding: 20px;
     border-radius: 4px;
     border: 2px dashed rgb(176, 176, 176);
     display: flex;
@@ -66,6 +65,35 @@ body {
     width: 200px;
     flex-direction: column;
 }
-.clickable{
-    cursor:pointer
+.clickable {
+    cursor: pointer;
 }
+/* main */
+main{
+    background: #FFE2E2;
+}
+.form {
+    font-size: 14px;
+}
+.form input[type='text'] {
+    border-radius: 5px;
+}
+.form button {
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 5px;
+    background: #f6f6f6;
+}
+.form > .row {
+    padding: 10px 8px;
+}
+.form > .row > label {
+    text-align: right;
+}
+.form > .row.actions {
+    margin-left: -2px;
+}
+.form>.row.actions>button{
+    margin-left: 30px;
+}
+
