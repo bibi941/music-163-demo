@@ -41,17 +41,17 @@ input {
     border-bottom: 1px solid #999;
 }
 .newSong.active {
-    background: #ffc7c7;
+    background: #ffe2e2;
 }
-.songList {
+#songList-container {
     text-align: left;
     flex-grow: 1;
 }
-.songList > li {
+#songList-container > ul > li {
     border-bottom: 1px solid #ddd;
     padding: 10px 5px;
 }
-.songList > li.active {
+#songList-container > ul > li.active {
     background: #ffe2e2;
 }
 
@@ -69,8 +69,8 @@ input {
     cursor: pointer;
 }
 /* main */
-main{
-    background: #FFE2E2;
+main {
+    background: #ffe2e2;
 }
 .form {
     font-size: 14px;
@@ -93,7 +93,6 @@ main{
 .form > .row.actions {
     margin-left: -2px;
 }
-.form>.row.actions>button{
+.form > .row.actions > button {
     margin-left: 30px;
 }
-

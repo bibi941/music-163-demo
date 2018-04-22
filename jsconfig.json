@@ -1,0 +1,10 @@
+{
+    "typeAcquisition": {
+        "include": [
+            "jquery"
+        ]
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
