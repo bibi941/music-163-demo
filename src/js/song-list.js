@@ -6,18 +6,27 @@
             </ul>
             `,
     render(data) {
+      //保存在song-list中
       let $el = $(this.el)
       $el.html(this.template)
       let { songs } = data
       let liList = songs.map(song => {
-        return $('<li></li>').text(song.name)
+        return $('<li></li>')
+          .text(song.name)
+          .attr('data-song-id', song.id)
       })
-      console.log('$el.find("ul")');
-      console.log($el.find('ul'))
+      //添加到ul中
       $el.find('ul').empty()
       liList.map(domli => {
         $el.find('ul').append(domli)
       })
+    },
+    activeLi(li) {
+      let $li = $(li)
+      $li
+        .addClass('active')
+        .siblings('.active')
+        .removeClass('active')
     },
     clearActive() {
       $(this.el)
@@ -28,6 +37,15 @@
   let model = {
     data: {
       songs: []
+    },
+    find() {
+      var query = new AV.Query('Song')
+      return query.find().then(songs => {
+        this.data.songs = songs.map(song => {
+          return { id: song.id, ...song.attributes }
+        })
+        return songs
+      })
     }
   }
   let controller = {
@@ -35,6 +53,23 @@
       this.view = view
       this.model = model
       this.view.render(this.model.data)
+      this.getAllSongs()
+      this.bindEvents()
+      this.bindEventHub()
+    },
+    getAllSongs() {
+      return this.model.find().then(() => {
+        this.view.render(this.model.data)
+      })
+    },
+    bindEvents() {
+      $(this.view.el).on('click', 'li', e => {
+        this.view.activeLi(e.currentTarget)
+        let songId = e.currentTarget.getAttribute('data-song-id')
+        window.eventHub.emit('select', { id: songId })
+      })
+    },
+    bindEventHub() {
       window.eventHub.on('upload', () => {
         this.view.clearActive()
       })
