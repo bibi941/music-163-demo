@@ -5,7 +5,6 @@
       this.$el = $(this.el)
     },
     template: `
-            <h1>新建歌曲</h1>
             <form class="form">
                 <div class="row">
                     <label>
@@ -40,6 +39,12 @@
         html = html.replace(`__${string}__`, data[string] || '')
       })
       $(this.el).html(html)
+      console.log(data.id)
+      if (data.id) {
+        $(this.el).prepend('<h1>编辑歌曲</h1>')
+      } else {
+        $(this.el).prepend('<h1>新建歌曲</h1>')
+      }
     }
   }
   let model = {
@@ -74,9 +79,13 @@
       this.view.render(this.model.data)
       window.eventHub.on('upload', data => {
         this.view.render(data) //上传后更新songform
-      }),
+      })
       window.eventHub.on('select', data => {
-        this.view.render(data)//选择li后更新songform
+        this.view.render(data) //选择li后更新songform
+      })
+      window.eventHub.on('new', () => {
+        this.model.data = {} //点击新建歌曲后更新songfom
+        this.view.render(this.model.data)
       })
     },
     bindEvents() {
