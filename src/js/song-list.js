@@ -11,9 +11,7 @@
       $el.html(this.template)
       let { songs } = data
       let liList = songs.map(song => {
-        return $('<li></li>')
-          .text(song.name)
-          .attr('data-song-id', song.id)
+        return $('<li></li>').text(song.name).attr('data-song-id', song.id)
       })
       //添加到ul中
       $el.find('ul').empty()
@@ -23,15 +21,10 @@
     },
     activeLi(li) {
       let $li = $(li)
-      $li
-        .addClass('active')
-        .siblings('.active')
-        .removeClass('active')
+      $li.addClass('active').siblings('.active').removeClass('active')
     },
     clearActive() {
-      $(this.el)
-        .find('.active')
-        .removeClass('active')
+      $(this.el).find('.active').removeClass('active')
     }
   }
   let model = {
@@ -66,7 +59,16 @@
       $(this.view.el).on('click', 'li', e => {
         this.view.activeLi(e.currentTarget)
         let songId = e.currentTarget.getAttribute('data-song-id')
-        window.eventHub.emit('select', { id: songId })
+        let data
+        let songs = this.model.data.songs
+        for (let i = 0; i < songs.length; i++) {
+          if (songs[i].id === songId) {
+            data = songs[i]
+            break
+          }          
+        }
+        let deepCopyData=JSON.parse(JSON.stringify(data))
+        window.eventHub.emit('select', deepCopyData)
       })
     },
     bindEventHub() {

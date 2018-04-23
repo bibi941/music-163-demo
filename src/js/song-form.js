@@ -1,7 +1,10 @@
 {
-  let view = { el: '.page > main', init() {
+  let view = {
+    el: '.page > main',
+    init() {
       this.$el = $(this.el)
-    }, template: `
+    },
+    template: `
             <h1>新建歌曲</h1>
             <form class="form">
                 <div class="row">
@@ -28,15 +31,17 @@
                     <button type="submit">保存</button>
                 </div>
             </form>
-        `, render(data = {}) {
-      //把订阅的data放入html中
+        `,
+    render(data = {}) {
+      //把订阅的data放入songform中
       let placeholders = ['name', 'url', 'singer', 'id']
       let html = this.template
       placeholders.map(string => {
         html = html.replace(`__${string}__`, data[string] || '')
       })
       $(this.el).html(html)
-    } }
+    }
+  }
   let model = {
     //存入leancloud数据库
     data: { name: '', singer: '', url: '', id: '' },
@@ -54,7 +59,7 @@
         newSong => {
           let { id, attributes } = newSong
           //存入model.data中
-          this.data={ id, ...attributes }
+          this.data = { id, ...attributes }
         },
         error => console.log(error)
       )
@@ -68,7 +73,10 @@
       this.bindEvents()
       this.view.render(this.model.data)
       window.eventHub.on('upload', data => {
-        this.view.render(data) //拿到callback开始操作
+        this.view.render(data) //上传后更新songform
+      }),
+      window.eventHub.on('select', data => {
+        this.view.render(data)//选择li后更新songform
       })
     },
     bindEvents() {
