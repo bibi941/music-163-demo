@@ -50,21 +50,28 @@
   let model = {
     //存入leancloud数据库
     data: { name: '', singer: '', url: '', id: '' },
+    update(data) {
+      console.log(this.data.id)
+      var song = AV.Object.createWithoutData('Song', this.data.id)
+      song.set('name', data.name)
+      song.set('singer', data.singer)
+      song.set('url', data.url)
+      return song.save().then(response => {
+        Object.assign(this.data, data)
+        return response
+      })
+    },
     create(data) {
-      // 声明类型
       var Song = AV.Object.extend('Song')
-      // 新建对象
       var song = new Song()
-      // 设置名称
       song.set('name', data.name)
       song.set('singer', data.singer)
       song.set('url', data.url)
       return song.save().then(
-        //数据库的存下数据后的callback
         newSong => {
           let { id, attributes } = newSong
           //存入model.data中
-          this.data = { id, ...attributes }
+          Object.assign(this.data, { id, ...attributes })
         },
         error => console.log(error)
       )
@@ -79,20 +86,41 @@
       this.bindEvents()
       this.bindEventsHub()
     },
+    update() {
+      let needs = ['name', 'singer', 'url']
+      let data = {}
+      needs.map(string => {
+        data[string] = this.view.$el.find(`[name="${string}"]`).val()
+      })
+      this.model.update(data).then(() => {
+        window.eventHub.emit(
+          'update',
+          JSON.parse(JSON.stringify(this.model.data))
+        )
+      })
+    },
+    create() {
+      let needs = ['name', 'singer', 'url']
+      let data = {}
+      needs.map(string => {
+        data[string] = this.view.$el.find(`[name="${string}"]`).val()
+      })
+      //存入leancloud数据库
+      this.model.create(data).then(() => {
+        this.view.render({}) //存入数据库中后清空表单内容
+        let deepCopyData = JSON.parse(JSON.stringify(this.model.data))
+        window.eventHub.emit('create', deepCopyData)
+      })
+    },
     bindEvents() {
       //把上面订阅的且已经放入html中的数据存下来
       this.view.$el.on('submit', 'form', e => {
         e.preventDefault()
-        let needs = ['name', 'singer', 'url']
-        let data = {}
-        needs.map(string => {
-          data[string] = this.view.$el.find(`[name="${string}"]`).val()
-        })
-        //存入leancloud数据库
-        this.model.create(data).then(() => {
-          this.view.render({}) //存入数据库中后清空表单内容
-          window.eventHub.emit('create', this.model.data)
-        })
+        if (this.model.data.id) {
+          this.update()
+        } else {
+          this.create()
+        }
       })
       //监听按钮reset掉songForm表单
       this.view.$el.on('reset', () => {
@@ -101,8 +129,9 @@
       })
     },
     bindEventsHub() {
-      window.eventHub.on('select', data => {
-        this.view.render(data) //选择li后更新songform
+      window.eventHub.on('select', liData => {
+        this.model.data = liData //选择li时,把此模块的data数据更新
+        this.view.render(this.model.data) //选择li后更新songform
       })
       window.eventHub.on('new', data => {
         if (this.model.data.id) {
