@@ -51,7 +51,6 @@
     //存入leancloud数据库
     data: { name: '', singer: '', url: '', id: '' },
     update(data) {
-      console.log(this.data.id)
       var song = AV.Object.createWithoutData('Song', this.data.id)
       song.set('name', data.name)
       song.set('singer', data.singer)

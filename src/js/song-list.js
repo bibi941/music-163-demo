@@ -9,9 +9,13 @@
       //保存在song-list中
       let $el = $(this.el)
       $el.html(this.template)
-      let { songs } = data
+      let { songs,selectId } = data
       let liList = songs.map(song => {
-        return $('<li></li>').text(song.name).attr('data-song-id', song.id)
+        let $li=$('<li></li>').text(song.name).attr('data-song-id', song.id)
+        if (song.id === selectId) {
+          $li.addClass('active')
+        }
+        return $li
       })
       //添加到ul中
       $el.find('ul').empty()
@@ -19,18 +23,15 @@
         $el.find('ul').append(domli)
       })
     },
-    activeLi(li) {
-      let $li = $(li)
-      $li.addClass('active').siblings('.active').removeClass('active')
-    },
+
     clearActive() {
-      $(this.el).find('.active').removeClass('active')
+      $(this.el)
+        .find('.active')
+        .removeClass('active')
     }
   }
   let model = {
-    data: {
-      songs: []
-    },
+    data: { songs: [], selectId: null },
     find() {
       var query = new AV.Query('Song')
       return query.find().then(songs => {
@@ -57,17 +58,18 @@
     },
     bindEvents() {
       $(this.view.el).on('click', 'li', e => {
-        this.view.activeLi(e.currentTarget)
         let songId = e.currentTarget.getAttribute('data-song-id')
+        this.model.data.selectId = songId//把选中的li的id记录在model中
+        this.view.render(this.model.data)
         let data
         let songs = this.model.data.songs
         for (let i = 0; i < songs.length; i++) {
           if (songs[i].id === songId) {
             data = songs[i]
             break
-          }          
+          }
         }
-        let deepCopyData=JSON.parse(JSON.stringify(data))
+        let deepCopyData = JSON.parse(JSON.stringify(data))
         window.eventHub.emit('select', deepCopyData)
       })
     },
@@ -79,14 +81,14 @@
       window.eventHub.on('new', () => {
         this.view.clearActive()
       })
-      window.eventHub.on('resetForm', ()=>{
-         this.view.clearActive()
+      window.eventHub.on('resetForm', () => {
+        this.view.clearActive()
       })
-      window.eventHub.on('update', (song) => {
+      window.eventHub.on('update', song => {
         let songs = this.model.data.songs
         for (let i = 0; i < songs.length; i++) {
-          if (songs[i].id===song.id) {
-            Object.assign(songs[i],song)
+          if (songs[i].id === song.id) {
+            Object.assign(songs[i], song)
           }
         }
         this.view.render(this.model.data)
