@@ -48,7 +48,7 @@
       this.view.render(this.model.data)
       this.getAllSongs()
       this.bindEvents()
-      this.bindEventHub()
+      this.bindEventsHub()
     },
     getAllSongs() {
       return this.model.find().then(() => {
@@ -71,16 +71,16 @@
         window.eventHub.emit('select', deepCopyData)
       })
     },
-    bindEventHub() {
-      window.eventHub.on('upload', () => {
-        this.view.clearActive()
-      })
+    bindEventsHub() {
       window.eventHub.on('create', songData => {
         this.model.data.songs.push(songData)
         this.view.render(this.model.data)
       })
       window.eventHub.on('new', () => {
         this.view.clearActive()
+      })
+      window.eventHub.on('resetForm', ()=>{
+         this.view.clearActive()
       })
     }
   }

@@ -28,6 +28,7 @@
                     <label>
                     </label>
                     <button type="submit">保存</button>
+                    <button type="reset">清空</button>
                 </div>
             </form>
         `,
@@ -39,7 +40,6 @@
         html = html.replace(`__${string}__`, data[string] || '')
       })
       $(this.el).html(html)
-      console.log(data.id)
       if (data.id) {
         $(this.el).prepend('<h1>编辑歌曲</h1>')
       } else {
@@ -75,18 +75,9 @@
       this.view = view
       this.model = model
       this.view.init()
-      this.bindEvents()
       this.view.render(this.model.data)
-      window.eventHub.on('upload', data => {
-        this.view.render(data) //上传后更新songform
-      })
-      window.eventHub.on('select', data => {
-        this.view.render(data) //选择li后更新songform
-      })
-      window.eventHub.on('new', () => {
-        this.model.data = {} //点击新建歌曲后更新songfom
-        this.view.render(this.model.data)
-      })
+      this.bindEvents()
+      this.bindEventsHub()
     },
     bindEvents() {
       //把上面订阅的且已经放入html中的数据存下来
@@ -102,6 +93,30 @@
           this.view.render({}) //存入数据库中后清空表单内容
           window.eventHub.emit('create', this.model.data)
         })
+      })
+      //监听按钮reset掉songForm表单
+      this.view.$el.on('reset', () => {
+        this.view.render({})
+        window.eventHub.emit('resetForm')
+      })
+    },
+    bindEventsHub() {
+      window.eventHub.on('select', data => {
+        this.view.render(data) //选择li后更新songform
+      })
+      window.eventHub.on('new', data => {
+        if (this.model.data.id) {
+          //form中存在id说明是从数据库中来的
+          this.model.data = {}
+        } else {
+          Object.assign(this.model.data, data)
+        }
+        this.view.render(this.model.data)
+      })
+      window.eventHub.on('resetForm', () => {
+        //点击清空按钮后，把数据恢复到初始状态
+        this.model.data = {}
+        this.view.render(this.model.data)
       })
     }
   }
