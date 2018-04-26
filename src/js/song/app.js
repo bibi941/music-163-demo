@@ -2,10 +2,22 @@
   let view = {
     el: '#app',
     template: `
-    <audio controls src={{url}}></audio>
+    <audio src={{url}}></audio>
+    <div>
+      <button class='play'>播放</button>
+      <button class='pause'>暂停</button>
+    </div>
     `,
     render(data) {
-      $(this.el).html(this.template.replace(`{{url}}`,data.url))
+      $(this.el).html(this.template.replace(`{{url}}`, data.url))
+    },
+    play() {
+      let audio = $(this.el).find('audio')[0]
+      audio.play()
+    },
+    pause() {
+      let audio = $(this.el).find('audio')[0]
+      audio.pause()
     }
   }
   let model = {
@@ -19,7 +31,6 @@
       var query = new AV.Query('Song')
       return query.get(id).then(
         song => {
-          console.log(song);
           Object.assign(this.data, { id: song.id, ...song.attributes })
           return song
         },
@@ -34,9 +45,17 @@
       this.view = view
       this.model = model
       let id = this.getSongId()
-      this.model.getLeancloudData(id).then((data) => {
-        console.log(this.model.data);
+      this.model.getLeancloudData(id).then(data => {
         this.view.render(this.model.data)
+      })
+      this.bindEvents()
+    },
+    bindEvents() {
+      $(this.view.el).on('click', '.play', () => {
+        this.view.play()
+      })
+      $(this.view.el).on('click', '.pause', () => {
+        this.view.pause()
       })
     },
     getSongId() {
