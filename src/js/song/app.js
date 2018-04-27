@@ -32,7 +32,7 @@
         singer: '',
         url: ''
       },
-      status: 'paused'
+      status: 'playing'
     },
     getLeancloudData(id) {
       var query = new AV.Query('Song')
@@ -61,16 +61,17 @@
       this.bindEvents()
     },
     bindEvents() {
-       $(this.view.el).on('click', '.icon-play', () => {
-         this.model.data.status = 'playing'
-         this.view.render(this.model.data)
-         this.view.play()
-       })
-       $(this.view.el).on('click', '.icon-pause', () => {
-         this.model.data.status = 'paused'
-         this.view.render(this.model.data)
-         this.view.pause()
-       })
+      $(this.view.el).on('click', '.disc-container', () => {
+        if (this.model.data.status === 'playing') {
+          this.view.pause()
+          this.model.data.status = 'pause'
+          this.view.render(this.model.data)
+        } else {
+          this.view.play()
+          this.model.data.status = 'playing'
+          this.view.render(this.model.data)
+        }
+      })
     },
     getSongId() {
       let search = window.location.search
