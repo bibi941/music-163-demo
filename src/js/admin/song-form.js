@@ -27,6 +27,12 @@
                     </label>
                     <input  name='cover' type="text" value="__cover__" required>
                 </div>
+                 <div class="row">
+                    <label>
+                        歌词
+                    </label>
+                    <textarea  name='lyric'>__lyric__</textarea>
+                </div>
                 <div class="row actions">
                     <label>
                     </label>
@@ -36,7 +42,7 @@
             </form>
         `, render(data = {}) {
       //把订阅的data放入songform中
-      let placeholders = ['name', 'url', 'singer', 'id','cover']
+      let placeholders = ['name', 'url', 'singer', 'id', 'cover','lyric']
       let html = this.template
       placeholders.map(string => {
         html = html.replace(`__${string}__`, data[string] || '')
@@ -57,6 +63,7 @@
       song.set('singer', data.singer)
       song.set('url', data.url)
       song.set('cover', data.cover)
+      song.set('lyric', data.lyric)
       return song.save().then(response => {
         Object.assign(this.data, data)
         return response
@@ -69,6 +76,7 @@
       song.set('singer', data.singer)
       song.set('url', data.url)
       song.set('cover', data.cover)
+      song.set('lyric', data.lyric)
       return song.save().then(
         newSong => {
           let { id, attributes } = newSong
@@ -89,7 +97,7 @@
       this.bindEventsHub()
     },
     update() {
-      let needs = ['name', 'singer', 'url','cover']
+      let needs = ['name', 'singer', 'url','cover','lyric']
       let data = {}
       needs.map(string => {
         data[string] = this.view.$el.find(`[name="${string}"]`).val()
@@ -102,7 +110,7 @@
       })
     },
     create() {
-      let needs = ['name', 'singer', 'url','cover']
+      let needs = ['name', 'singer', 'url', 'cover','lyric']
       let data = {}
       needs.map(string => {
         data[string] = this.view.$el.find(`[name="${string}"]`).val()

@@ -133,8 +133,6 @@ section.topbar>a::after {
   color: #D43C33;
 }
 
-.tabs-nav>li.active>.text {}
-
 .tabs-nav>li.active>.text::after {
   content: '';
   position: absolute;
@@ -167,7 +165,6 @@ section.topbar>a::after {
   display: table;
 }
 
-section.playlists {}
 
 section.playlists>ol.songs {
   display: flex;

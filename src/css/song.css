@@ -120,8 +120,13 @@
 .song-description .lyric {
   height: 72px;
   overflow: hidden;
+  transform: translateY(0);
+  margin-top: 10px;
 }
-
+.song-description .lyric>.lines>p{
+  font-size: 16px;
+  font-family: Helvetica, sans-serif
+}
 .song-description p.active {
   color: white;
 }
