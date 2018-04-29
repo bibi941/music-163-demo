@@ -2,13 +2,7 @@
   let view = {
     el: '#app',
     render(data) {
-      let {
-        song,
-        song: {
-          lyric
-        },
-        status
-      } = data
+      let {song,song: {lyric},status} = data
       $(this.el).find('.vague').css('background-image', `url(${song.cover})`)
       $(this.el).find('img.cover').attr('src', song.cover)
       $(this.el).find('.song-description>h1').text(song.name+'-'+song.singer)
@@ -27,8 +21,11 @@
       } else {
         $(this.el).find('.disc-container').removeClass('playing')
       }
+    },
+    addLyrics(data) {
       //把拿到个歌词字符串加工，分成时间+歌词
-      lyric.split('\n').map((string) => {
+      let lyric=data.song.lyric
+      lyric.split('\n').map(string => {
         let p = document.createElement('p')
         let regex = /\[([\d:.]+)\](.+)/
         let matches = string.match(regex)
@@ -43,7 +40,9 @@
         } else {
           p.textContent = string
         }
-        $(this.el).find('.lyric>.lines').append(p)
+        $(this.el)
+          .find('.lyric>.lines')
+          .append(p)
       })
     },
     showLyric(time) {
@@ -106,10 +105,12 @@
   let controller = {
     init(view, model) {
       this.view = view
+     
       this.model = model
       let id = this.getSongId()
       this.model.getLeancloudData(id).then(() => {
         this.view.render(this.model.data)
+         this.view.addLyrics(this.model.data)
       })
       this.bindEvents()
 
