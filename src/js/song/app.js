@@ -1,4 +1,4 @@
-{
+{//
   let view = {
     el: '#app',
     render(data) {
@@ -11,14 +11,14 @@
       } = data
       $(this.el).find('.vague').css('background-image', `url(${song.cover})`)
       $(this.el).find('img.cover').attr('src', song.cover)
-      $(this.el).find('.song-description>h1').text(song.name)
+      $(this.el).find('.song-description>h1').text(song.name+'-'+song.singer)
       if ($(this.el).find('audio').attr('src') !== song.url) {
         let audio = $(this.el).find('audio').attr('src', song.url)[0]
         audio.onended = () => {
           window.eventHub.emit('songEnd')
         }
         audio.ontimeupdate = () => {
-          this.showLyric(audio.currentTime)//当前音频播放的时间
+          this.showLyric(audio.currentTime) //当前音频播放的时间
         }
       }
       //状态判断，是否加载动画
@@ -57,9 +57,9 @@
           let nextTime = allP.eq(i + 1).attr('data-time')
           if (currentTime <= time && time < nextTime) {
             let p = allP[i]
-            let pHeight = p.getBoundingClientRect().top//播放时的current歌词的距离视口的高度
+            let pHeight = p.getBoundingClientRect().top //播放时的current歌词的距离视口的高度
             let linesHeight = $(this.el).find('.lyric>.lines')[0].getBoundingClientRect().top
-            let height = pHeight - linesHeight//动画应该移动的高度
+            let height = pHeight - linesHeight //动画应该移动的高度
             $(this.el).find('.lyric>.lines').css({
               transform: `translateY(${-(height-25)}px)`
             })
@@ -71,9 +71,11 @@
 
     },
     play() {
+      $(this.el).find('.disc-container>.pointer').css({transform: `rotate(0deg)`})
       $(this.el).find('audio')[0].play()
     },
     pause() {
+      $(this.el).find('.disc-container>.pointer').css({transform: `rotate(-25deg)`})
       $(this.el).find('audio')[0].pause()
     }
   }
@@ -86,16 +88,13 @@
         url: '',
         lyric: '',
       },
-      status: 'playing'
+      status: 'pause'
     },
     getLeancloudData(id) {
       var query = new AV.Query('Song')
       return query.get(id).then(
         song => {
-          Object.assign(this.data.song, {
-            id: song.id,
-            ...song.attributes
-          })
+          Object.assign(this.data.song, {id: song.id,...song.attributes})
           return song
         },
         error => {
@@ -113,6 +112,7 @@
         this.view.render(this.model.data)
       })
       this.bindEvents()
+
     },
     bindEvents() {
       //暂停-播放

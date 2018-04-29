@@ -10,29 +10,39 @@
 }
 
 @keyframes circle {
-  0% {
-    transform: rotate(0deg);
-  }
+  
   100% {
     transform: rotate(360deg);
   }
 }
 
 .page {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 .vague {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background: transparent url() no-repeat center;
   background-size: cover;
   z-index: -1;
   filter: blur(15px) brightness(70%);
+}
+.svgLogo{
+height: 0;
+}
+.svgLogo>svg{
+  height: 1.1rem;
+  position: relative;
+  top: 11px;
+  left: 11px;
 }
 .disc-container {
   position: relative;
@@ -62,6 +72,10 @@
   width: 24vw;
   position: absolute;
   left: 45vw;
+  transform-origin: 11px 0;
+  transform: rotate(-25deg);
+  top: -0.5vh;
+  transition: all .5s ease;
 }
 
 .disc-container .disc {
@@ -85,14 +99,12 @@
   position: absolute;
   border-radius: 50%;
   animation: circle 20s infinite linear;
-  animation-play-state: paused;
+  animation-play-state: running;
 }
 
 .disc-container.playing .light,
 .disc-container.playing .cover {
   animation-play-state: running;
-}
-.disc-container.playing .icon-play {
 }
 
 .song-description {
@@ -123,9 +135,9 @@
   transform: translateY(0);
   margin-top: 10px;
 }
-.song-description .lyric>.lines>p{
+.song-description .lyric > .lines > p {
   font-size: 16px;
-  font-family: Helvetica, sans-serif
+  font-family: Helvetica, sans-serif;
 }
 .song-description p.active {
   color: white;
