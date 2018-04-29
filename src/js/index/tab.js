@@ -12,7 +12,6 @@
       this.view.init()
       this.model = model
       this.bindEvents()
-      this.bindEventsHub()
     },
     bindEvents() {
       this.view.$el.on('click', '.tabs-nav>li', (e) => {
@@ -22,9 +21,6 @@
         window.eventHub.emit('selectTab',tabName)
       })
     },
-    bindEventsHub() {
-
-    }
   }
   controller.init(view)
 }
