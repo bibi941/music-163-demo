@@ -61,6 +61,7 @@
     </div>
 
     <ol class="tab-content noCollapse">
+      <!-- 推荐音乐 -->
       <li class="page-1 active">
         <section class="playlists">
           <h2 class="sectionTitle">推荐歌单</h2>
@@ -115,7 +116,56 @@
           </div>
         </section>
       </li>
-      <li class="page-2">page 2</li>
+      <!-- 热歌榜 -->
+      <li class="page-2">
+
+        <div class="hotTop">
+            <div class="hotIcon"></div>
+            <p class="hotTime">更新日期：04月29日</p>
+        </div>
+
+        <div class="hotList">
+          <ol class="hotOl">
+              <li>
+                <a href="./song.html?id={{song.id}}">
+                  <h3>红砖月</h3>
+                  <p>
+                    <svg class="icon icon-sq">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-sq"></use>
+                    </svg>
+                    龙儿
+                  </p>
+                  <div class="playButton">
+                    <svg class="icon icon-play">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-play"></use>
+                    </svg>
+                  </div>
+                </a>
+              </li>
+                  <li>
+                    <a href="./song.html?id={{song.id}}">
+                      <h3>嘻嘻</h3>
+                      <p>
+                        <svg class="icon icon-sq">
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-sq"></use>
+                        </svg>
+                        bibi
+                      </p>
+                      <div class="playButton">
+                        <svg class="icon icon-play">
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-play"></use>
+                        </svg>
+                      </div>
+                    </a>
+                  </li>
+          </ol>
+        </div>
+
+        <div class="hotButtom">
+          <span>加载完毕</span>
+        </div>
+      </li>
+
       <li class="page-3">
         <input id="search" type="text" style="background:#EBECEC;">
         <ol id="searchResult"></ol>

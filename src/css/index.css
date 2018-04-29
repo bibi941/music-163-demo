@@ -34,7 +34,7 @@ h6 {
   font-weight: normal;
 }
 
-html{
+html {
   font-size: 16px;
 }
 
@@ -161,15 +161,16 @@ section.topbar>a::after {
   display: table;
 }
 
-
-section.playlists>ol.songs {
+section.playlists>ol.songs,
+.hotOl {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   font-size: 13px;
 }
 
-section.playlists>ol.songs>li {
+section.playlists>ol.songs>li,
+.hotOl>li {
   width: 32.8%;
   margin: 8px 0;
 }
@@ -186,8 +187,6 @@ section.playlists>ol.songs>li p {
 section.playlists>ol.songs>li img {
   width: 100%;
 }
-
-
 
 section.songs>.list {
   margin-top: 18px;
@@ -257,4 +256,51 @@ section.art .copyright {
   font-size: 12px;
   color: #888;
   transform: scale(.75);
+}
+
+/* 热歌榜 */
+
+.hotTop {
+  background: url(../img/bg-hotSong.jpg) no-repeat;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 9.125rem;
+  padding-left: 20px;
+}
+
+.hotTop::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.hotIcon {
+  background: url(../img/sprite.png);
+  width: 140px;
+  height: 67px;
+  z-index: 1;
+  background-position: -25px -30px;
+  background-size: 166px 97px;
+  position: relative;
+  top: -15px;
+  left: 1px;
+}
+
+.hotTime {
+  position: absolute;
+  color: hsla(0, 0%, 100%, .8);
+  font-size: 12px;
+  top: 101px;
+  left: 15px;
+  transform: scale(.91);
+  z-index: 1;
 }
