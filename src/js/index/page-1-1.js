@@ -29,7 +29,7 @@
           .replace(`{{song.cover}}`, song.cover)
           .replace(`{{song.singer}}`, song.singer)
           .replace(`{{song.id}}`, song.id))
-        this.$el.find(`ol`).append($li)
+        this.$el.find(`ol.songs`).append($li)
       })
     }
   }
@@ -56,11 +56,10 @@
       this.view.init()
       this.model = model
       this.model.find().then(() => {
+        window.eventHub.emit('getSongsData', JSON.parse(JSON.stringify(this.model.data)))
         this.view.render(this.model.data)
-        this.bindEvents()
       })
     },
-    bindEvents() {}
   }
   controller.init(view, model)
 }

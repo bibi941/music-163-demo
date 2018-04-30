@@ -118,57 +118,28 @@
       </li>
       <!-- 热歌榜 -->
       <li class="page-2">
-
         <div class="hotTop">
-            <div class="hotIcon"></div>
-            <p class="hotTime">更新日期：04月29日</p>
+          <div class="hotIcon"></div>
+          <p class="hotTime">更新日期：04月29日</p>
         </div>
-
-        <div class="hotList">
-          <ol class="hotOl">
-              <li>
-                <a href="./song.html?id={{song.id}}">
-                  <h3>红砖月</h3>
-                  <p>
-                    <svg class="icon icon-sq">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-sq"></use>
-                    </svg>
-                    龙儿
-                  </p>
-                  <div class="playButton">
-                    <svg class="icon icon-play">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-play"></use>
-                    </svg>
-                  </div>
-                </a>
-              </li>
-                  <li>
-                    <a href="./song.html?id={{song.id}}">
-                      <h3>嘻嘻</h3>
-                      <p>
-                        <svg class="icon icon-sq">
-                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-sq"></use>
-                        </svg>
-                        bibi
-                      </p>
-                      <div class="playButton">
-                        <svg class="icon icon-play">
-                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-play"></use>
-                        </svg>
-                      </div>
-                    </a>
-                  </li>
+        <section class="songs">
+          <ol id="songs" class="list">
           </ol>
-        </div>
-
+        </section>
         <div class="hotButtom">
-          <span>加载完毕</span>
+          <div>已经全部加载完毕</div>
         </div>
       </li>
 
       <li class="page-3">
-        <input id="search" type="text" style="background:#EBECEC;">
-        <ol id="searchResult"></ol>
+        <div id="search-aera" class="search-aera">
+          <span class="search-icon"></span>
+          <label >
+            <input id="search" type="text" placeholder="搜索结果">
+          </label>
+        </div>
+        <div id="top-search" class="top-search"></div>
+        <div id="search-result" class="search-result"></div>
       </li>
     </ol>
   </div>
@@ -180,6 +151,8 @@
   <script src="./js/admin/event-hub.js"></script>
   <script src="./js/index/tab.js"></script>
   <script src="./js/index/page-1.js"></script>
+  <script src="./js/index/page-1-1.js"></script>
+  <script src="./js/index/page-1-2.js"></script>
   <script src="./js/index/page-2.js"></script>
   <script src="./js/index/page-3.js"></script>
 </body>

@@ -270,6 +270,7 @@ section.art .copyright {
   align-items: flex-start;
   height: 9.125rem;
   padding-left: 20px;
+  z-index: -1;
 }
 
 .hotTop::after {
@@ -303,4 +304,10 @@ section.art .copyright {
   left: 15px;
   transform: scale(.91);
   z-index: 1;
+}
+.hotButtom{
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+  color:#888
 }

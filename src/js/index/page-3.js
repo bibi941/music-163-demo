@@ -1,6 +1,6 @@
 {
   let view = {
-    el: '.page-3',
+    el: 'li.page-3',
     init() {
       this.$el = $(this.el)
     },

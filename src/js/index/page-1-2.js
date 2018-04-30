@@ -1,6 +1,6 @@
 {
   let view = {
-    el: 'section.songs',
+    el: 'li.page-1',
     template: `
     <li >
       <a href="./song.html?id={{song.id}}">
@@ -23,14 +23,16 @@
       this.$el = $(this.el)
     },
     render(data) {
-      let {songs} = data
+      let {
+        songs
+      } = data
       songs.map(song => {
         let $li = $(this.template
           .replace(`{{song.name}}`, song.name)
           .replace(`{{song.singer}}`, song.singer)
           .replace(`{{song.id}}`, song.id)
         )
-        this.$el.find('ol.list').append($li)
+        this.$el.find('ol#songs').append($li)
       })
     }
   }
@@ -38,31 +40,20 @@
     data: {
       songs: []
     },
-    find() {
-      var query = new AV.Query('Song')
-      return query.find().then(songs => {
-        this.data.songs = songs.map(song => {
-          return {
-            id: song.id,
-            ...song.attributes
-          }
-        })
-        return songs
-      })
-    }
+
   }
   let controller = {
     init(view, model) {
       this.view = view
       this.view.init()
       this.model = model
-      this.model.find().then(() => {
-        this.view.render(this.model.data)
-        this.bindEvents()
-      })
+      this.bindEventsHub()
     },
-    bindEvents() {
-  
+    bindEventsHub() {
+      window.eventHub.on('getSongsData', data => {
+         Object.assign(this.model.data, data)
+        this.view.render(this.model.data)
+      })
     }
   }
   controller.init(view, model)
