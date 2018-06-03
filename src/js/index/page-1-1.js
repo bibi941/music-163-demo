@@ -13,22 +13,23 @@
       </li>
     `,
     init() {
-
       this.$el = $(this.el)
     },
     render(data) {
       //随机random到页面中
       let { songs } = data
-      for (let i = 0; i < songs.length-2  ; i++) {
-        var randomIndex = Math.floor(Math.random() * songs.length);
-        songs.splice(randomIndex, 1);
+      for (let i = 0; i < songs.length - 2; i++) {
+        var randomIndex = Math.floor(Math.random() * songs.length)
+        songs.splice(randomIndex, 1)
       }
       songs.map(song => {
-        let $li = $(this.template
-          .replace(`{{song.name}}`, song.name)
-          .replace(`{{song.cover}}`, song.cover)
-          .replace(`{{song.singer}}`, song.singer)
-          .replace(`{{song.id}}`, song.id))
+        let $li = $(
+          this.template
+            .replace(`{{song.name}}`, song.name)
+            .replace(`{{song.cover}}`, song.cover)
+            .replace(`{{song.singer}}`, song.singer)
+            .replace(`{{song.id}}`, song.id)
+        )
         this.$el.find(`ol.songs`).append($li)
       })
     }
@@ -56,10 +57,13 @@
       this.view.init()
       this.model = model
       this.model.find().then(() => {
-        window.eventHub.emit('getSongsData', JSON.parse(JSON.stringify(this.model.data)))
+        window.eventHub.emit(
+          'getSongsData',
+          JSON.parse(JSON.stringify(this.model.data))
+        )
         this.view.render(this.model.data)
       })
-    },
+    }
   }
   controller.init(view, model)
 }

@@ -1,6 +1,16 @@
 {
   let view = {
     el: 'li.page-3',
+    template: `
+      <div id="search-aera" class="search-aera">
+          <span class="search-icon"></span>
+          <label >
+            <input id="search" type="text" placeholder="搜索结果">
+          </label>
+      </div>
+      <div id="top-search" class="top-search"></div>
+      <div id="search-result" class="search-result"></div>
+    `,
     init() {
       this.$el = $(this.el)
     },
@@ -9,6 +19,10 @@
     },
     hide() {
       this.$el.removeClass('active')
+    },
+    render() {
+      let $html = $(this.template)
+      this.$el.append($html)
     }
   }
   let model = {}
@@ -17,6 +31,7 @@
       this.view = view
       this.view.init()
       this.model = model
+      this.view.render()
       this.bindEvents()
       this.bindEventsHub()
     },
