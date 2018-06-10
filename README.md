@@ -17,16 +17,20 @@ hs -c-1
 ```
 ## 后台管理界面
 由于歌词随动的实现需要，所以必须上传有时间轴的标准歌词
+
 ![](https://user-gold-cdn.xitu.io/2018/6/10/163ea25e4fc6c048?w=695&h=400&f=png&s=56706)
 
 ## 首页
 完美还原网易云移动端界面,由于数据库容量有限,只上传了10首歌曲，首页歌单采用扑克牌算法，让每次刷新都是不同的推荐歌单。
+
 ![](https://user-gold-cdn.xitu.io/2018/6/10/163ea25e515b6fb5?w=250&h=432&f=png&s=134043)
 
 ## 歌曲详情页面
 采用audio+svg+css3 filter实现了本页基本效果，歌词滚动采用的Regex匹配相应的标准歌词格式达到随动效果
+
 ![](https://user-gold-cdn.xitu.io/2018/6/10/163ea25e51ab01fc?w=245&h=432&f=png&s=57766)
 
 ## 歌单页面
 也是采用svg+sprite实现了本页面的效果
+
 ![](https://user-gold-cdn.xitu.io/2018/6/10/163ea25e51f84c7a?w=241&h=432&f=png&s=54212)
